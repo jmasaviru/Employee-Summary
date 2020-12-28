@@ -33,3 +33,63 @@ const render = require("./lib/htmlRenderer");
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
+
+const team = [];
+
+// Validation for name
+const validateName = async (name) => {
+    if (name === '') {
+       return "Invalid name given";
+    };
+    return true;
+ };
+
+ // Validation for number
+ const validateNumber = async (name) => {
+    if (name === '') {
+       return "Invalid number given";
+    };
+    return true;
+ };
+ 
+ // Validation for email
+ function validateEmail(name) 
+{if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(name))
+  {
+    return (true)
+  }
+    return("Invalid Email Adderess")
+}
+
+console.log("Welcome to Team Generator!");
+
+function teamMember() {
+    // Ask questions to gather information about manager. Save to an manager object.
+    
+
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "What is your manager's name?",
+                name: "name",
+                validate: validateName
+            },
+            {
+                type: "input",
+                message: "What is your manager's ID?",
+                name: "id",
+                validate: validateNumber 
+            },
+            {
+                type: "input",
+                message: "What is your manager's email?",
+                name: "email",
+                validate: validateEmail
+            },
+            {
+                type: "input",
+                message: "What is your manager's office number?",
+                name: "officeNumber",
+                validate: validateNumber
+            }
+        ])
