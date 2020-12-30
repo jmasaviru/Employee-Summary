@@ -58,38 +58,144 @@ const validateName = async (name) => {
   {
     return (true)
   }
-    return("Invalid Email Adderess")
+    return("Invalid Email Address")
 }
 
 console.log("Welcome to Team Generator!");
 
-function teamMember() {
-    // Ask questions to gather information about manager. Save to an manager object.
+// Quetsions asked to get information about the Manager
+function askManagerQuestions() {
     
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "What is your manager's name?",
+            name: "name",
+            validate: validateName
+        },
+        {
+            type: "input",
+            message: "What is your manager's ID?",
+            name: "id",
+            validate: validateNumber 
+        },
+        {
+            type: "input",
+            message: "What is your manager's email?",
+            name: "email",
+            validate: validateEmail
+        },
+        {
+            type: "input",
+            message: "What is your manager's office number?",
+            name: "officeNumber",
+            validate: validateNumber
+        }
+    ]).then(data => {
+        let employee = new Manager(data.name, data.email, data.id, data.officeNumber);
+        team.push(employee);
+        createEmployee();
+    });
+}
+// Questions asked to get information about the Engineer
+function askEngineerQuestions() {
 
-        inquirer.prompt([
-            {
-                type: "input",
-                message: "What is your manager's name?",
-                name: "name",
-                validate: validateName
-            },
-            {
-                type: "input",
-                message: "What is your manager's ID?",
-                name: "id",
-                validate: validateNumber 
-            },
-            {
-                type: "input",
-                message: "What is your manager's email?",
-                name: "email",
-                validate: validateEmail
-            },
-            {
-                type: "input",
-                message: "What is your manager's office number?",
-                name: "officeNumber",
-                validate: validateNumber
-            }
-        ])
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "What is your engineer's name?",
+            name: "name",
+            validate: validateName
+        },
+        {
+            type: "input",
+            message: "What is your engineer's id?",
+            name: "id",
+            validate: validateNumber
+        },
+        {
+            type: "input",
+            message: "What is your engineer's email?",
+            name: "email",
+            validate: validateEmail
+        },
+        {
+            type: "input",
+            message: "What is your engineer's GitHub username?",
+            name: "Github",
+            validate: validateName
+        }
+    ]).then(data =>{
+        console.log(data);
+        let employee = new Engineer(data.name,data.id, data.email, data.GitHub)
+        team.push(employee)
+        createEmployee()
+    });
+}
+// Questions asked to get information about the Intern
+function askInternQuestions() {
+
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "What is your intern's name?",
+            name: "name",
+            validate: validateName
+        },
+        {
+            type: "input",
+            message: "What is your intern's id?",
+            name: "id",
+            validate: validateNumber
+        },
+        {
+            type: "input",
+            message: "What is your intern's email?",
+            name: "email",
+            validate: validateEmail 
+        },
+        {
+            type: "input",
+            message: "Please enter the name of your intern's school.",
+            name: "school",
+            validate: validateName
+        }
+    ]).then(data =>{
+        console.log(data)
+        let employee = new Intern(data.name, data.id, data.email, data.school)
+        team.push(employee)
+        createEmployee()
+    })
+}
+
+// Fuction to prompt the User on which employee they would like to add
+
+function createEmployee() {
+    inquirer.prompt([{
+
+        type: "list",
+        message: "What type of employee would you like to add?",
+        choices: [
+            "Manager",
+            "Engineer",
+            "Intern",
+            "I don't want to add any more team members."
+        ],
+
+// Decides which questions to ask based on the employee title as selected by the user
+        name: "title"
+    }]).then(answers => {
+        if (answers.title === "Manager") {
+            askManagerQuestions();
+        }
+        else if (answers.title === "Engineer") {
+            askEngineerQuestions();
+        }
+        else if (answers.title === "Intern") {
+            askInternQuestions();
+        }
+        else
+            return writeHTML(team);
+        
+    })
+}
