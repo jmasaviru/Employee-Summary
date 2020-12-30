@@ -11,30 +11,9 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
 
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
-
-const team = [];
+// Creates an empty array for the Employees to populate.
+const employeeArray = [];
 
 // Validation for name
 const validateName = async (name) => {
@@ -61,6 +40,7 @@ const validateName = async (name) => {
     return("Please enter a valid Email Address")
 }
 
+// Welcome message for User to start building their Team
 console.log("Welcome to Team Generator!");
 
 // Quetsions asked to get information about the Manager
@@ -93,7 +73,7 @@ function askManagerQuestions() {
         }
     ]).then(data => {
         let employee = new Manager(data.name, data.email, data.id, data.officeNumber);
-        team.push(employee);
+        employeeArray.push(employee);
         createEmployee();
     });
 }
@@ -128,7 +108,7 @@ function askEngineerQuestions() {
     ]).then(data =>{
         console.log(data);
         let employee = new Engineer(data.name,data.id, data.email, data.GitHub)
-        team.push(employee)
+        employeeArray.push(employee)
         createEmployee()
     });
 }
@@ -163,12 +143,12 @@ function askInternQuestions() {
     ]).then(data =>{
         console.log(data)
         let employee = new Intern(data.name, data.id, data.email, data.school)
-        team.push(employee)
+        employeeArray.push(employee)
         createEmployee()
-    })
+    });
 }
 
-// Fuction to prompt the User on which employee they would like to add
+// Fuction to prompt the User on which Employee they would like to add
 
 function createEmployee() {
     inquirer.prompt([{
@@ -182,7 +162,7 @@ function createEmployee() {
             "I don't want to add any more team members."
         ],
 
-// Decides which questions to ask based on the employee title as selected by the user
+// Decides which questions to ask based on the Employee title as selected by the User
         name: "title"
     }]).then(answers => {
         if (answers.title === "Manager") {
@@ -195,24 +175,26 @@ function createEmployee() {
             askInternQuestions();
         }
         else
-            return writeHTML(team);
+            return writeHTML(employeeArray);
         
-    })
+    });
 }
 
-//function to write file
+// Function to write file
 function generateTeam() {
     // Check synchronously in Node.js if the file or directory already exists in path or not.
     if (!fs.existsSync(OUTPUT_DIR)) {
         fs.mkdirSync(OUTPUT_DIR);
     }
-    //Prompt to create Employee/Team-member
+    // Prompt to create Employee/Team-member
     createEmployee();
     
 }
 function writeHTML(){
-    console.log(team);
-    fs.writeFileSync(outputPath, render(team), "UTF-8");
+    console.log(employeeArray);
+    fs.writeFileSync(outputPath, render(employeeArray), "UTF-8");
+    // Success message for User to know that their Team was created
+    console.log("Your team has been created!");
 }
 
 generateTeam();
