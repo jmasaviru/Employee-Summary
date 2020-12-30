@@ -39,7 +39,7 @@ const team = [];
 // Validation for name
 const validateName = async (name) => {
     if (name === '') {
-       return "Invalid name given";
+       return "Please enter a valid name";
     };
     return true;
  };
@@ -47,7 +47,7 @@ const validateName = async (name) => {
  // Validation for number
  const validateNumber = async (name) => {
     if (name === '') {
-       return "Invalid number given";
+       return "Please enter a valid number";
     };
     return true;
  };
@@ -58,7 +58,7 @@ const validateName = async (name) => {
   {
     return (true)
   }
-    return("Invalid Email Address")
+    return("Please enter a valid Email Address")
 }
 
 console.log("Welcome to Team Generator!");
@@ -199,3 +199,20 @@ function createEmployee() {
         
     })
 }
+
+//function to write file
+function generateTeam() {
+    // Check synchronously in Node.js if the file or directory already exists in path or not.
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR);
+    }
+    //Prompt to create Employee/Team-member
+    createEmployee();
+    
+}
+function writeHTML(){
+    console.log(team);
+    fs.writeFileSync(outputPath, render(team), "UTF-8");
+}
+
+generateTeam();
