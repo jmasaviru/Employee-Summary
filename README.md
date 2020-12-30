@@ -42,10 +42,10 @@
 
  ## Links
 
- * Video link for demonstration 
-  [Click here](https://drive.google.com/file/d/1Ob4HVX32I9472QiMMOGGnfixKS5k8iub/view) to see a demonstration of this app.
+ * Video link for demonstration:  
+  [Click here](https://drive.google.com/file/d/1Ob4HVX32I9472QiMMOGGnfixKS5k8iub/view) to see a demonstration of this application.
  
- * GitHub repository URL:
+ * GitHub repository URL: https://github.com/jmasaviru/Employee-Summary
 
  ## Questions
   * If you have questions feel free to email me at: jmasaviru@gmail.com
